@@ -1,0 +1,36 @@
+/* Mostly stolen from https://ftp.fau.de/ */
+
+body {
+	background : #f2f2f2; 
+	color : #000000;
+	/* font-size : 12pt; */
+        font-family : sans-serif;
+	padding-left  : 15px;
+	padding-right : 15px;
+}
+
+h1 {
+	color:#003366;
+	font-size:25pt;
+	font-style:bold;
+	margin:20px 20px 20px 2px;
+}
+
+h2 {
+	color:#003366;
+	font-size:15pt;
+	font-style:bold;
+	margin:20px 20px 20px 2px;
+}
+
+a:link    { color:blue; font-style:bold; text-decoration:none; }
+a:visited {	color:blue; font-style:bold; text-decoration:none; }
+a:focus   { color:blue; font-style:bold; text-decoration:underline; }
+a:hover   { color:blue; font-style:bold; text-decoration:none; }
+a:active  { color:blue; font-style:bold; text-decoration:underline; }
+
+table, tr, td, th {
+	border : 1px solid black;
+	border-collapse : collapse;
+	padding : 5px;
+}

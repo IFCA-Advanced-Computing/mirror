@@ -1,0 +1,25 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="de" lang="de">
+
+<head>
+    <title>{{ title }}</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <link rel="stylesheet" type="text/css" href="./main.css">
+        <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+</head>
+
+<body>
+  <a href="http://ifca.unican.es"><img src="images/ifca.png" align="right"></a>
+  <a href="http://www.csic.es"><img src="images/csic.png" align="right" style="padding-right:5px;"></a>
+  <a href="http://www.unican.es"><img src="images/uc.png" align="right" style="padding-right:5px;"></a>
+  <h1>{{ title }}</h1>
+
+
+  {% block content %}{% endblock %}
+
+  <hr>
+  <p style="text-size:-1" align="right">Template updated: {{ template_date }},
+   page generated from template: {{ date }}
+</body>
+</html>
+
