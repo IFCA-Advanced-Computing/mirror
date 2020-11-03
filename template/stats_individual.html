@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block content %}
+  <h2>{{ mirror }} detailed statistics</h2>
+  <ul>
+      <li>
+          Name: {{ mirror }}
+      </li>
+      <li>
+          Path: <a href="/mirrors/{{ mirror }}">mirrors/{{ mirror }}</a>
+      </li>
+      <li>
+          Description: {{ mirror_data["description"] }}
+      </li>
+      <li>
+          Update frequency: {{ mirror_data["update-frequency"] }} hours
+      </li>
+  </ul>
+  <table>
+      <tr>
+          <th>
+              Last run start
+          </th>
+          <th>
+              Last run end
+          </th>
+          <th>
+              Last run duration
+          </th>
+      </tr>
+      {% for update in mirror_data["updates"] %}
+      <tr>
+          <td>
+              <p>{{ update["start_date"] }}</p>
+          </td>
+          <td>
+              </p>{{ update["end_date"] }}</p>
+          </td>
+          <td>
+              <p>{{ update["duration"] }}</p>
+          </td>
+      </tr>
+      {% endfor %}
+  </table>
+{% endblock %}
+

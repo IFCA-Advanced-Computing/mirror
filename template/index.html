@@ -11,17 +11,38 @@
   <table>
       <tr>
           <th>
-              Name
+              Mirror name
           </th>
           <th>
               Description
           </th>
           <th>
-              Update frequency
+              Update frequency (hours)
           </th>
           <th>
               Last run
           </th>
       </tr>
+      {% for mirror, data in mirror_data.items() %}
+      <tr>
+          <td>
+              <a href="/mirrors/{{ mirror }}">{{ mirror }}</a>
+          </td>
+          <td>
+              {{ data["description"] }}
+          </td>
+          <td>
+              {{ data["update-frequency"] }}
+          </td>
+          <td>
+              <a href="stats_{{ mirror }}.html">{{ data["updates"][-1]["end_date"] }}</a>
+          </td>
+      </tr>
+      {% endfor %}
   </table>
+
+  <h2> Mirror statistics </h2>
+  <p>
+  <a href="stats.html">Detailed mirror statistics</a>
+  </p>
 {% endblock %}

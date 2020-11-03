@@ -14,12 +14,13 @@
   <a href="http://www.unican.es"><img src="images/uc.png" align="right" style="padding-right:5px;"></a>
   <h1>{{ title }}</h1>
 
-
   {% block content %}{% endblock %}
 
-  <hr>
-  <p style="text-size:-1" align="right">Template updated: {{ template_date }},
-   page generated from template: {{ date }}
+  <footer>
+  <p>All times are UTC.</p>
+  <p>Template updated: {{ template_date }}, 
+  page statically generated from template: {{ date }}.
+  </footer>
 </body>
 </html>
 

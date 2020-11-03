@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block content %}
+  <h2>Mirror update statistics</h2>
+  <table>
+      <tr>
+          <th>
+              Mirror name
+          </th>
+          <th>
+              Update frequency (hours)
+          </th>
+          <th>
+              Last 5 runs start
+          </th>
+          <th>
+              Last 5 runs end
+          </th>
+          <th>
+              Last 5 runs duration
+          </th>
+      </tr>
+      {% for mirror, data in mirror_data.items() %}
+      <tr>
+          <td>
+              <a href="stats_{{ mirror }}.html">{{ mirror }}</a>
+          </td>
+          <td>
+              {{ data["update-frequency"] }}
+          </td>
+          <td>
+              {% for update in data["updates"][-5:] %}
+              <p>{{ update["start_date"] }}</p>
+              {% endfor %}
+          </td>
+          <td>
+              {% for update in data["updates"][-5:] %}
+              </p>{{ update["end_date"] }}</p>
+              {% endfor %}
+          </td>
+          <td>
+              {% for update in data["updates"][-5:] %}
+              <p>{{ update["duration"] }}</p>
+              {% endfor %}
+          </td>
+      </tr>
+      {% endfor %}
+  </table>
+{% endblock %}

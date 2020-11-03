@@ -23,6 +23,14 @@ h2 {
 	margin:20px 20px 20px 2px;
 }
 
+footer {
+    font-size: 10px;
+    text-align: right;
+    padding: 5px 10px 5px 10px;
+    border-top: 1px solid;
+    margin-top: 20px;
+}
+
 a:link    { color:blue; font-style:bold; text-decoration:none; }
 a:visited {	color:blue; font-style:bold; text-decoration:none; }
 a:focus   { color:blue; font-style:bold; text-decoration:underline; }
