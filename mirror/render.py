@@ -17,13 +17,14 @@ import mirror
 
 MIRROR_DATA = mirror.MIRROR_DATA
 MIRROR_LOCK = mirror.MIRROR_LOCK
+ROOT = pathlib.Path(__file__).parent / ".."
 
 env = jinja2.Environment(
-    loader=jinja2.FileSystemLoader('template'),
+    loader=jinja2.FileSystemLoader(ROOT / 'template'),
     autoescape=jinja2.select_autoescape(['html', 'xml'])
 )
 
-outdir = pathlib.Path("output")
+outdir = ROOT / "output"
 
 title = "Welcome to mirror.ifca.es"
 date = datetime.datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S")
