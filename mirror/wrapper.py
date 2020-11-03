@@ -15,11 +15,9 @@ import yaml
 import mirror
 
 MIRROR_DATA = mirror.MIRROR_DATA
+MIRROR_LOCK = mirror.MIRROR_LOCK
 
-lock = filelock.FileLock(
-    MIRROR_DATA.parent / (MIRROR_DATA.name + ".lock"),
-    timeout=10
-)
+lock = filelock.FileLock(MIRROR_LOCK, timeout=10)
 
 if len(sys.argv[1:]) < 2:
     print(f"ERROR: bad usage, use '{sys.argv[0]} <mirror_name> <command>'")

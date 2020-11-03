@@ -16,6 +16,7 @@ import yaml
 import mirror
 
 MIRROR_DATA = mirror.MIRROR_DATA
+MIRROR_LOCK = mirror.MIRROR_LOCK
 
 env = jinja2.Environment(
     loader=jinja2.FileSystemLoader('template'),
@@ -27,10 +28,7 @@ outdir = pathlib.Path("output")
 title = "Welcome to mirror.ifca.es"
 date = datetime.datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S")
 
-lock = filelock.FileLock(
-    MIRROR_DATA.parent / (MIRROR_DATA.name + ".lock"),
-    timeout=10
-)
+lock = filelock.FileLock(MIRROR_LOCK, timeout=10)
 
 with lock:
     if not MIRROR_DATA.exists():
