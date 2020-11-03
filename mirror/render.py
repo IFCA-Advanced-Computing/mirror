@@ -1,7 +1,11 @@
 import datetime
 import pathlib
 import os.path
+import sys
 import time
+
+sys.path.append(".")  # noqa
+sys.path.append("..")  # noqa
 
 import filelock
 import jinja2

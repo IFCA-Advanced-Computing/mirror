@@ -2,6 +2,9 @@ import datetime
 import subprocess
 import sys
 
+sys.path.append(".")  # noqa
+sys.path.append("..")  # noqa
+
 import filelock
 import yaml
 
