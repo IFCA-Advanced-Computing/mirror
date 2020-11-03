@@ -1,12 +1,13 @@
 #!/usr/bin/python3
 
 import datetime
-import pathlib
 import os.path
+import pathlib
 import sys
 
-sys.path.append(".")  # noqa
-sys.path.append("..")  # noqa
+path = pathlib.Path(__file__).parent / ".."  # noqa
+path = path.resolve().as_posix()  # noqa
+sys.path.append(path)  # noqa
 
 import filelock
 import jinja2
