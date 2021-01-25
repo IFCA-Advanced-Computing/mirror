@@ -1,48 +1,77 @@
 {% extends "base.html" %}
 {% block content %}
-  <p>This server hosts
-     <a href="http://en.wikipedia.org/wiki/Mirror_%28computing%29">mirrors</a>
-     for many Open Source projects, in particular it hosts many mirrors for
-     popular linux distributions. This server is located in Santander (Cantabria) northern of
-     Spain. You can also get <a href="about.html">more information about this server</a>.
+  <p>
+    This server is managed by the
+    <a href="https://computing.ifca.es">Advanced Computing and e-Science</a>
+    group at the <a href="https://ifca.unican.es">Institute of Physics of Cantabria (IFCA)</a>.
+    It hosts
+    <a href="https://en.wikipedia.org/wiki/Mirror_site">mirrors</a>
+    for some Open Source projects, in particular for popular Linux distributions (but not only).
+    This server is located in Santander (Cantabria) northern of Spain. You can
+    also get 
+    <a href="about.html">more information about this server</a>.
   </p>
 
-  <h2>Directory of mirrors</h2>
+  <h2>Mirror list</h2>
   <table>
       <tr>
           <th>
               Mirror name
           </th>
           <th>
+              URLs
+          </th>
+          <th>
               Description
           </th>
           <th>
-              Update frequency (hours)
+              Update frequency <br /> (hours)
           </th>
           <th>
-              Last run
+              Last sucessful run <br /> (click for more info)
           </th>
       </tr>
       {% for mirror, data in mirror_data.items() %}
       <tr>
           <td>
-              <a href="/mirrors/{{ mirror }}">{{ mirror }}</a>
+              <a href="/{{ mirror }}">{{ mirror }}</a>
+          </td>
+          <td>
+              <span class="plain">
+                  <a href="http://repo.ifca.es/{{ mirror }}">HTTP</a> - 
+                  <a href="https://repo.ifca.es/{{ mirror }}">HTTPS</a> - 
+                  <a href="ftp://repo.ifca.es/{{ mirror }}">FTP</a> - 
+                  <a href="rsync://repo.ifca.es/{{ mirror }}">RSYNC</a>
+              </span>
           </td>
           <td>
               {{ data["description"] }}
           </td>
-          <td>
+          <td style="text-align: center;">
               {{ data["update-frequency"] }}
           </td>
-          <td>
-              <a href="stats_{{ mirror }}.html">{{ data["updates"][-1]["end_date"] }}</a>
+          <td class="{{ data["status"] }}">
+              <a href="stats_{{ mirror }}.html">{{ data["last ok"] }}</a>
           </td>
       </tr>
       {% endfor %}
   </table>
 
-  <h2> Mirror statistics </h2>
+  <h2>Mirror status </h2>
   <p>
-  <a href="stats.html">Detailed mirror statistics</a>
+    We provide a more detailed view of the <a href="stats.html">individual mirror synchronization status</a>.
   </p>
+
+  <h2>Server statistics</h2> 
+  <h3>Last day</h3>
+  <div style="vertical-align: top;  display: inline-block;">
+      <img src="https://repo.ifca.es/collection3/bin/graph.cgi?hostname=repo;plugin=df;plugin_instance=srv;type=df_complex;begin=-86400" alt="Disk usage last day" />
+      <img src="https://repo.ifca.es/collection3/bin/graph.cgi?hostname=repo;plugin=interface;plugin_instance=eth1;type=if_octets;begin=-86400" alt="Network last day" />
+  </div>
+  <h3>Last week</h3>
+  <div style="vertical-align: top;  display: inline-block;">
+      <img src="https://repo.ifca.es/collection3/bin/graph.cgi?hostname=repo;plugin=df;plugin_instance=srv;type=df_complex;begin=-604800" alt="Disk usage last day" />
+      <img src="https://repo.ifca.es/collection3/bin/graph.cgi?hostname=repo;plugin=interface;plugin_instance=eth1;type=if_octets;begin=-604800" alt="Network last day" />
+  </div>
+
 {% endblock %}

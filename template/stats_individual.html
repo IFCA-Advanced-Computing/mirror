@@ -1,18 +1,24 @@
 {% extends "base.html" %}
 {% block content %}
-  <h2>{{ mirror }} detailed statistics</h2>
+  <h2>{{ mirror }} detailed status</h2>
   <ul>
       <li>
           Name: {{ mirror }}
       </li>
       <li>
-          Path: <a href="/mirrors/{{ mirror }}">mirrors/{{ mirror }}</a>
+          Path: <a href="/{{ mirror }}">{{ mirror }} [HTTP]</a> - 
+                  <a href="https://repo.ifca.es/{{ mirror }}">[HTTPS]</a> - 
+                  <a href="ftp://repo.ifca.es/{{ mirror }}">[FTP]</a> - 
+                  <a href="rsync://repo.ifca.es/{{ mirror }}">[RSYNC]</a>
       </li>
       <li>
           Description: {{ mirror_data["description"] }}
       </li>
       <li>
-          Update frequency: {{ mirror_data["update-frequency"] }} hours
+          Update frequency: {{ mirror_data["update-frequency"] }} hours.
+      </li>
+      <li>
+          Mirror status (updated/outdated): <span class="{{ mirror_data["status"] }}">{{ mirror_data["status"].upper() }}</span>.
       </li>
   </ul>
   <table>
@@ -26,17 +32,28 @@
           <th>
               Last run duration
           </th>
+          <th>
+              Last run status
+          </th>
       </tr>
-      {% for update in mirror_data["updates"] %}
+      {% for update in mirror_data["updates"][::-1] %}
+      {% if update["status"] != 0 %}
+      {% set status = "error" %}
+      {% else %}
+      {% set status = "ok" %}
+      {% endif %}
       <tr>
-          <td>
-              <p>{{ update["start_date"] }}</p>
+          <td class="{{ status }}">
+              {{ update["start_date"] }}
           </td>
-          <td>
-              </p>{{ update["end_date"] }}</p>
+          <td class="{{ status }}">
+              {{ update["end_date"] }}
           </td>
-          <td>
-              <p>{{ update["duration"] }}</p>
+          <td class="{{ status }}">
+              {{ update["duration"] }}
+          </td>
+          <td class="{{ status }}">
+              {{ status.upper() }}
           </td>
       </tr>
       {% endfor %}

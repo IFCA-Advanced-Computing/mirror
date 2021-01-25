@@ -1,22 +1,36 @@
 {% extends "base.html" %}
 {% block content %}
-  <h2>Mirror update statistics</h2>
+  <h2>All mirrors status</h2>
   <table>
       <tr>
-          <th>
+          <th rowspan=2>
               Mirror name
           </th>
+          <th rowspan=2>
+              Update frequency <br /> (hours)
+          </th>
+          <th colspan=5>
+              Last 5 runs
+          </th>
+          <th rowspan=2>
+              Mirror status <br /> (updated/outdated)
+          </th>
+      </tr>
+      <tr>
           <th>
-              Update frequency (hours)
+              Start time
           </th>
           <th>
-              Last 5 runs start
+              End time
           </th>
           <th>
-              Last 5 runs end
+              Duration
           </th>
           <th>
-              Last 5 runs duration
+              Time ago
+          </th>
+          <th>
+              Status
           </th>
       </tr>
       {% for mirror, data in mirror_data.items() %}
@@ -24,23 +38,55 @@
           <td>
               <a href="stats_{{ mirror }}.html">{{ mirror }}</a>
           </td>
-          <td>
-              {{ data["update-frequency"] }}
+          <td style="text-align: center;">
+              <span class="plain">{{ data["update-frequency"] }}</span>
           </td>
+          {% set updates = data["updates"][-1:-5:-1] %}
           <td>
-              {% for update in data["updates"][-5:] %}
-              <p>{{ update["start_date"] }}</p>
+              {% for update in updates %}
+                 {% if update["status"] != 0 %}
+                   {% set state = "error" %}
+                 {% else %}
+                   {% set state = "ok" %}
+                 {% endif %}
+              <p class="{{ state }}">{{ update["start_date"] }}</p>
               {% endfor %}
           </td>
           <td>
-              {% for update in data["updates"][-5:] %}
-              </p>{{ update["end_date"] }}</p>
+              {% for update in updates %}
+                 {% if update["status"] != 0 %}
+                   {% set state = "error" %}
+                 {% else %}
+                   {% set state = "ok" %}
+                 {% endif %}
+              <p class="{{ state }}">{{ update["end_date"] }}</p>
               {% endfor %}
           </td>
           <td>
-              {% for update in data["updates"][-5:] %}
-              <p>{{ update["duration"] }}</p>
+              {% for update in updates %}
+                 {% if update["status"] != 0 %}
+                   {% set state = "error" %}
+                 {% else %}
+                   {% set state = "ok" %}
+                 {% endif %}
+              <p class="{{ state }}">{{ update["duration"] }}</p>
               {% endfor %}
+          </td>
+          <td style="text-align: center;">
+              <span class="plain">{{ data["time ago"] }}</span>
+          </td>
+          <td>
+              {% for update in updates %}
+                 {% if update["status"] != 0 %}
+                   {% set state = "error" %}
+                 {% else %}
+                   {% set state = "ok" %}
+                 {% endif %}
+              <p class="{{ state }}">{{ state.upper() }}</p>
+              {% endfor %}
+          </td>
+          <td class="{{ data["status"]}}">
+              {{ data["status"].upper() }}
           </td>
       </tr>
       {% endfor %}

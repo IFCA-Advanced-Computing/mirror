@@ -4,7 +4,7 @@ body {
 	background : #f2f2f2; 
 	color : #000000;
 	/* font-size : 12pt; */
-        font-family : sans-serif;
+    font-family : sans-serif;
 	padding-left  : 15px;
 	padding-right : 15px;
 }
@@ -41,4 +41,47 @@ table, tr, td, th {
 	border : 1px solid black;
 	border-collapse : collapse;
 	padding : 5px;
+}
+
+table p {
+    margin: 0 0 1px 0;
+}
+
+table th {
+    background: #e1e1e1;
+}
+
+.content {
+}
+
+.error, .ok, .updated, .outdated {
+    text-align: center;
+}
+.error {
+    background: #990000;
+    color: #dddddd;
+    padding: 1px;
+    font-family: monospace;
+}
+
+.ok, .updated {
+    background: #336600;
+    color: #dddddd;
+    padding: 1px;
+    font-family: monospace;
+}
+
+.outdated {
+    background: #cc3300;
+    color: #dddddd;
+    padding: 1px;
+    font-family: monospace;
+}
+
+.plain {
+    padding: 1px;
+    font-family: monospace;
+}
+.updated a, .outdated a {
+    color: white;
 }
