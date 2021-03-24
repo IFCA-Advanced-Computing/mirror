@@ -14,9 +14,6 @@ import yaml
 
 import mirror
 
-MIRROR_DATA = mirror.MIRROR_DATA
-MIRROR_DATA_LOCK = mirror.MIRROR_DATA_LOCK
-
 if len(sys.argv[1:]) < 2:
     print(f"ERROR: bad usage, use '{sys.argv[0]} <mirror_name> <command>'")
     sys.exit(1)
@@ -24,7 +21,10 @@ if len(sys.argv[1:]) < 2:
 mirror_name = sys.argv[1]
 command = sys.argv[2:]
 
-MIRROR_LOCK = MIRROR_DATA_LOCK.parent / f"mirror-{mirror_name}.lock"
+MIRROR_DATA = mirror.MIRROR_DATADIR / f"mirror-data-{mirror_name}.yml"
+MIRROR_DATA_LOCK = MIRROR_DATA.with_suffix(".lock")
+MIRROR_LOCK = mirror.MIRROR_DATADIR / f"mirror-{mirror_name}.lock"
+
 
 def do_sync(mirror_name, command):
     start_date = datetime.datetime.utcnow()

@@ -18,8 +18,8 @@ import yaml
 
 import mirror
 
-MIRROR_DATA = mirror.MIRROR_DATA
-MIRROR_DATA_LOCK = mirror.MIRROR_DATA_LOCK
+MIRROR_DATADIR = mirror.MIRROR_DATADIR
+#MIRROR_DATA_LOCK = mirror.MIRROR_DATA_LOCK
 ROOT = pathlib.Path(__file__).parent / ".."
 
 env = jinja2.Environment(
@@ -35,16 +35,26 @@ rundate = now.strftime("%Y-%m-%d %H:%M:%S")
 
 uptime = subprocess.check_output(['uptime', "-p"]).decode("utf8")[3:].strip()
 
-lock = filelock.FileLock(MIRROR_DATA_LOCK, timeout=10)
 
-with lock:
-    if not MIRROR_DATA.exists():
-        data = {}
-    else:
-        with open(MIRROR_DATA, "r") as f:
-            #aux = yaml.load(f, Loader=yaml.FullLoader)a
-            aux = yaml.safe_load(f)
-        data = collections.OrderedDict(sorted(aux.items(), key=lambda t: t[0]))
+data = collections.OrderedDict()
+
+files = list(MIRROR_DATADIR.glob("*yml"))
+files.sort()
+
+for f in files:
+    MIRROR_DATA_LOCK = f.with_suffix(".lock")
+
+    lock = filelock.FileLock(MIRROR_DATA_LOCK, timeout=10)
+
+    with lock:
+        if not f.exists():
+            aux = {}
+        else:
+            with open(f, "r") as f:
+                #aux = yaml.load(f, Loader=yaml.FullLoader)a
+                aux = yaml.safe_load(f)
+            aux = collections.OrderedDict(sorted(aux.items(), key=lambda t: t[0]))
+    data.update(aux)
 
 for m in data.values():
     m.setdefault("last ok", "N/A")
@@ -64,7 +74,7 @@ for m in data.values():
             else:
                 last =  datetime.datetime.strptime(u["end_date"], "%Y-%m-%d %H:%M:%S")
                 diff = now - last
-                if diff.total_seconds() < (m["update-frequency"] * 60 * 60 * 1.25):
+                if diff.total_seconds() < (m["update-frequency"] * 60 * 60 * 1.25) + (15 * 60):
                     m["status"] = "updated"
                     updated = True
             break
