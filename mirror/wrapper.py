@@ -57,6 +57,8 @@ def do_sync(mirror_name, command):
             "status": status.returncode,
         })
 
+        data[mirror_name]["updates"] =  data[mirror_name]["updates"][-500:]
+
         with open(MIRROR_DATA, "w") as f:
             yaml.dump(data, f)
             #    open("MIRROR_", "a").write("You were the chosen one.")
